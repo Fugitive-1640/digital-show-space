@@ -5,6 +5,11 @@ import { useEffect, useState } from "react";
 
 export const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [textIndex, setTextIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+
+  const texts = ["Full Stack Developer", "UI/UX Designer", "Problem Solver", "Tech Enthusiast"];
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -15,48 +20,85 @@ export const Hero = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    
+    if (isTyping) {
+      if (displayedText.length < texts[textIndex].length) {
+        timeout = setTimeout(() => {
+          setDisplayedText(texts[textIndex].slice(0, displayedText.length + 1));
+        }, 100);
+      } else {
+        timeout = setTimeout(() => setIsTyping(false), 2000);
+      }
+    } else {
+      if (displayedText.length > 0) {
+        timeout = setTimeout(() => {
+          setDisplayedText(displayedText.slice(0, -1));
+        }, 50);
+      } else {
+        setTextIndex((prev) => (prev + 1) % texts.length);
+        setIsTyping(true);
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayedText, textIndex, isTyping, texts]);
+
   return (
     <section id="home" className="min-h-screen flex flex-col justify-center items-center relative overflow-hidden">
-      {/* Animated background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10"></div>
+      {/* Animated morphing background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 morph-background"></div>
       
-      {/* Floating particles */}
+      {/* Floating particles with different animations */}
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(30)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-primary/20 rounded-full animate-float"
+            className={`absolute rounded-full ${
+              i % 3 === 0 ? 'w-2 h-2 bg-primary/30 particle-float' :
+              i % 3 === 1 ? 'w-1 h-1 bg-accent/40 floating-element' :
+              'w-3 h-3 bg-primary/20 pulse-animation'
+            }`}
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${3 + Math.random() * 2}s`,
+              animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${3 + Math.random() * 4}s`,
             }}
           />
         ))}
       </div>
 
-      {/* Interactive cursor following element */}
+      {/* Interactive multi-layer cursor effect */}
       <div
-        className="absolute w-96 h-96 bg-gradient-to-r from-primary/5 to-accent/5 rounded-full blur-3xl pointer-events-none transition-all duration-300 ease-out"
+        className="absolute w-96 h-96 bg-gradient-to-r from-primary/8 to-accent/8 rounded-full blur-3xl pointer-events-none transition-all duration-500 ease-out morph-background"
         style={{
           left: mousePosition.x - 192,
           top: mousePosition.y - 192,
         }}
       />
+      <div
+        className="absolute w-64 h-64 bg-gradient-to-r from-accent/6 to-primary/6 rounded-full blur-2xl pointer-events-none transition-all duration-700 ease-out"
+        style={{
+          left: mousePosition.x - 128,
+          top: mousePosition.y - 128,
+        }}
+      />
       
       <div className="text-center space-y-8 z-10 max-w-4xl px-6">
         <div className="space-y-4">
-          <h1 className="text-5xl md:text-7xl font-bold opacity-0 animate-[fadeInUp_1s_ease-out_0.2s_forwards]">
-            Hi, I'm <span className="hero-text inline-block animate-[pulse_2s_ease-in-out_infinite]">Alex</span>
+          <h1 className="text-5xl md:text-7xl font-bold opacity-0 animate-[fadeInUp_1s_ease-out_0.2s_forwards] hover-glow">
+            Hi, I'm <span className="animated-gradient-text inline-block wiggle-animation">Alex</span>
           </h1>
-          <h2 className="text-2xl md:text-3xl text-muted-foreground font-light opacity-0 animate-[fadeInUp_1s_ease-out_0.4s_forwards]">
-            <span className="inline-block animate-[float_3s_ease-in-out_infinite]">Full Stack</span>{" "}
-            <span className="inline-block animate-[float_3s_ease-in-out_infinite] [animation-delay:0.5s]">Developer</span>
+          <h2 className="text-2xl md:text-3xl text-muted-foreground font-light opacity-0 animate-[fadeInUp_1s_ease-out_0.4s_forwards] min-h-[3rem] flex items-center justify-center">
+            <span className="typewriter border-r-2 border-primary">
+              {displayedText}
+            </span>
           </h2>
         </div>
         
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed opacity-0 animate-[fadeInUp_1s_ease-out_0.6s_forwards]">
+        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed opacity-0 animate-[fadeInUp_1s_ease-out_0.6s_forwards] shimmer-effect p-4 rounded-lg">
           I create beautiful, functional web applications with modern technologies. 
           Passionate about clean code, user experience, and innovative solutions.
         </p>
@@ -64,14 +106,14 @@ export const Hero = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center opacity-0 animate-[fadeInUp_1s_ease-out_0.8s_forwards]">
           <Button 
             size="lg" 
-            className="bg-primary hover:bg-primary/90 text-primary-foreground transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/25 group"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-primary/25 group ripple-effect glowing-border magnetic-hover"
           >
-            <span className="group-hover:animate-pulse">View My Work</span>
+            <span className="group-hover:animate-pulse text-glow">View My Work</span>
           </Button>
           <Button 
             variant="outline" 
             size="lg" 
-            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary/25"
+            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-primary/25 card-3d magnetic-hover"
           >
             Download Resume
           </Button>
@@ -79,14 +121,14 @@ export const Hero = () => {
         
         <div className="flex justify-center space-x-6 opacity-0 animate-[fadeInUp_1s_ease-out_1s_forwards]">
           {[
-            { icon: Github, delay: "0s" },
-            { icon: Linkedin, delay: "0.1s" },
-            { icon: Mail, delay: "0.2s" }
-          ].map(({ icon: Icon, delay }, index) => (
+            { icon: Github, delay: "0s", color: "hover:text-purple-400" },
+            { icon: Linkedin, delay: "0.1s", color: "hover:text-blue-400" },
+            { icon: Mail, delay: "0.2s", color: "hover:text-green-400" }
+          ].map(({ icon: Icon, delay, color }, index) => (
             <a 
               key={index}
               href="#" 
-              className="text-muted-foreground hover:text-primary transition-all duration-300 transform hover:scale-125 hover:rotate-12 animate-[fadeInUp_0.6s_ease-out_forwards]"
+              className={`text-muted-foreground ${color} transition-all duration-300 transform hover:scale-150 hover:rotate-12 animate-[fadeInUp_0.6s_ease-out_forwards] floating-element magnetic-hover p-2 rounded-full hover:bg-muted/20 glowing-border`}
               style={{ animationDelay: delay }}
             >
               <Icon size={24} />
@@ -95,9 +137,15 @@ export const Hero = () => {
         </div>
       </div>
       
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-[bounce_2s_infinite] opacity-0 animate-[fadeInUp_1s_ease-out_1.2s_forwards]">
-        <ChevronDown size={32} className="text-muted-foreground animate-pulse" />
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-[bounce_2s_infinite] opacity-0 animate-[fadeInUp_1s_ease-out_1.2s_forwards] color-shift">
+        <ChevronDown size={32} className="text-muted-foreground animate-pulse hover:scale-125 transition-transform duration-300" />
       </div>
+
+      {/* Additional floating geometric shapes */}
+      <div className="absolute top-20 left-20 w-16 h-16 border border-primary/20 rotate-45 floating-element opacity-20"></div>
+      <div className="absolute bottom-40 right-20 w-12 h-12 bg-accent/10 rounded-full pulse-animation"></div>
+      <div className="absolute top-1/3 right-40 w-8 h-20 bg-primary/10 transform rotate-12 wiggle-animation"></div>
+      <div className="absolute bottom-1/3 left-40 w-20 h-8 bg-accent/10 transform -rotate-12 morph-background"></div>
     </section>
   );
 };

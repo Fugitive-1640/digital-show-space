@@ -174,6 +174,107 @@
   }
 }
 
+@keyframes wiggle {
+  0%, 7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-15deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+  }
+  25% {
+    transform: rotateZ(-10deg);
+  }
+  30% {
+    transform: rotateZ(6deg);
+  }
+  35% {
+    transform: rotateZ(-4deg);
+  }
+  40%, 100% {
+    transform: rotateZ(0);
+  }
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: hsl(var(--primary));
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+@keyframes morphBackground {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+}
+
+@keyframes colorShift {
+  0% { filter: hue-rotate(0deg); }
+  33% { filter: hue-rotate(120deg); }
+  66% { filter: hue-rotate(240deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes glowing {
+  0% { box-shadow: 0 0 5px hsl(var(--primary)); }
+  50% { box-shadow: 0 0 20px hsl(var(--primary)), 0 0 30px hsl(var(--primary)); }
+  100% { box-shadow: 0 0 5px hsl(var(--primary)); }
+}
+
+@keyframes textGlow {
+  0%, 100% { text-shadow: 0 0 5px hsl(var(--primary)/0.5); }
+  50% { text-shadow: 0 0 20px hsl(var(--primary)/0.8), 0 0 30px hsl(var(--primary)/0.6); }
+}
+
+@keyframes particleFloat {
+  0% { 
+    transform: translateY(100vh) rotate(0deg); 
+    opacity: 0;
+  }
+  10% { 
+    opacity: 1; 
+  }
+  90% { 
+    opacity: 1; 
+  }
+  100% { 
+    transform: translateY(-100vh) rotate(360deg); 
+    opacity: 0; 
+  }
+}
+
+@keyframes magneticHover {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-2px, -2px) scale(1.02); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
 .float-animation {
   animation: float 4s ease-in-out infinite;
 }
@@ -196,6 +297,45 @@
 
 .scale-in {
   animation: scaleIn 0.6s ease-out;
+}
+
+.wiggle-animation {
+  animation: wiggle 2s ease-in-out infinite;
+}
+
+.shimmer-effect {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--primary) / 0.1),
+    transparent
+  );
+  background-size: 200px 100%;
+  animation: shimmer 2s infinite;
+}
+
+.morph-background {
+  animation: morphBackground 8s ease-in-out infinite;
+}
+
+.color-shift {
+  animation: colorShift 6s ease-in-out infinite;
+}
+
+.glowing-border {
+  animation: glowing 2s ease-in-out infinite alternate;
+}
+
+.text-glow {
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+.particle-float {
+  animation: particleFloat 15s linear infinite;
+}
+
+.magnetic-hover:hover {
+  animation: magneticHover 0.3s ease-in-out;
 }
 
 /* Page transition animations */
@@ -273,3 +413,109 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Typewriter effect */
+.typewriter {
+  overflow: hidden;
+  border-right: 3px solid hsl(var(--primary));
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: 0.15em;
+  animation: typewriter 3.5s steps(40, end), blink 0.75s step-end infinite;
+}
+
+/* Advanced hover effects */
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px -12px hsl(var(--primary) / 0.25);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 30px hsl(var(--primary) / 0.6);
+  transform: scale(1.05);
+}
+
+/* Gradient text animations */
+.animated-gradient-text {
+  background: linear-gradient(-45deg, hsl(var(--primary)), hsl(var(--accent)), hsl(280, 84%, 68%), hsl(var(--primary)));
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 4s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Ripple effect */
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: hsl(var(--primary) / 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.ripple-effect:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* 3D card effect */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+.card-3d:hover {
+  transform: rotateY(10deg) rotateX(10deg) translateZ(20px);
+}
+
+/* Floating elements */
+.floating-element {
+  animation: floatingElement 6s ease-in-out infinite;
+}
+
+@keyframes floatingElement {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-30px) rotate(2deg); }
+  66% { transform: translateY(-15px) rotate(-1deg); }
+}
+
+/* Staggered animations */
+.stagger-animation {
+  animation: staggerFade 0.8s ease-out forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@keyframes staggerFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stagger-delay-1 { animation-delay: 0.1s; }
+.stagger-delay-2 { animation-delay: 0.2s; }
+.stagger-delay-3 { animation-delay: 0.3s; }
+.stagger-delay-4 { animation-delay: 0.4s; }
+.stagger-delay-5 { animation-delay: 0.5s; }
