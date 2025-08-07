@@ -87,6 +87,32 @@ export const Hero = () => {
       />
       
       <div className="text-center space-y-8 z-10 max-w-4xl px-6">
+        {/* Profile Image/Logo Section */}
+        <div className="flex justify-center mb-8 opacity-0 animate-[fadeInUp_1s_ease-out_0.1s_forwards]">
+          <div className="relative group">
+            {/* Rotating border effect */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary via-accent to-primary rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-[spin_3s_linear_infinite]"></div>
+            
+            {/* Profile image container */}
+            <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-background transform transition-all duration-500 group-hover:scale-110 hover-glow magnetic-hover">
+              <img 
+                src="/lovable-uploads/0afa7303-3e33-47bb-9162-6e0152af65b1.png" 
+                alt="Profile" 
+                className="w-full h-full object-cover animated-gradient-overlay"
+              />
+              
+              {/* Overlay effect */}
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              {/* Floating tech elements around the image */}
+              <div className="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full animate-ping opacity-75"></div>
+              <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-accent rounded-full animate-pulse"></div>
+              <div className="absolute top-1/2 -right-4 w-2 h-2 bg-primary/60 rounded-full floating-element"></div>
+              <div className="absolute top-1/4 -left-4 w-3 h-3 bg-accent/60 rounded-full wiggle-animation"></div>
+            </div>
+          </div>
+        </div>
+
         <div className="space-y-4">
           <h1 className="text-5xl md:text-7xl font-bold opacity-0 animate-[fadeInUp_1s_ease-out_0.2s_forwards] hover-glow">
             Hi, I'm <span className="animated-gradient-text inline-block wiggle-animation">Alex</span>
