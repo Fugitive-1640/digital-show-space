@@ -2,7 +2,6 @@
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 export const Hero = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -134,11 +133,8 @@ export const Hero = () => {
           <Button 
             size="lg" 
             className="bg-primary hover:bg-primary/90 text-primary-foreground transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-primary/25 group ripple-effect glowing-border magnetic-hover"
-            asChild
           >
-            <Link to="/upload-work">
-              <span className="group-hover:animate-pulse text-glow">View My Work</span>
-            </Link>
+            <span className="group-hover:animate-pulse text-glow">View My Work</span>
           </Button>
           <Button 
             variant="outline" 
@@ -150,22 +146,31 @@ export const Hero = () => {
         </div>
         
         <div className="flex justify-center space-x-6 opacity-0 animate-[fadeInUp_1s_ease-out_1s_forwards]">
-          {[
-            { icon: Github, delay: "0s", color: "hover:text-purple-400", href: "https://github.com" },
-            { icon: Linkedin, delay: "0.1s", color: "hover:text-blue-400", href: "https://linkedin.com" },
-            { icon: Mail, delay: "0.2s", color: "hover:text-green-400", href: "mailto:alex@example.com" }
-          ].map(({ icon: Icon, delay, color, href }, index) => (
-            <a 
-              key={index}
-              href={href} 
-              target={href.startsWith('mailto:') ? '_self' : '_blank'}
-              rel={href.startsWith('mailto:') ? '' : 'noopener noreferrer'}
-              className={`text-muted-foreground ${color} transition-all duration-300 transform hover:scale-110 animate-[fadeInUp_0.6s_ease-out_forwards] p-2 rounded-full hover:bg-muted/20`}
-              style={{ animationDelay: delay }}
-            >
-              <Icon size={24} />
-            </a>
-          ))}
+          <a 
+            href="https://github.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-primary transition-all duration-300 transform hover:scale-110 p-3 rounded-full hover:bg-muted/20 border border-transparent hover:border-primary/20 hover:shadow-lg hover:shadow-primary/25"
+            aria-label="GitHub Profile"
+          >
+            <Github size={24} />
+          </a>
+          <a 
+            href="https://linkedin.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-blue-400 transition-all duration-300 transform hover:scale-110 p-3 rounded-full hover:bg-muted/20 border border-transparent hover:border-blue-400/20 hover:shadow-lg hover:shadow-blue-400/25"
+            aria-label="LinkedIn Profile"
+          >
+            <Linkedin size={24} />
+          </a>
+          <a 
+            href="mailto:hello@alexdeveloper.com"
+            className="text-muted-foreground hover:text-green-400 transition-all duration-300 transform hover:scale-110 p-3 rounded-full hover:bg-muted/20 border border-transparent hover:border-green-400/20 hover:shadow-lg hover:shadow-green-400/25"
+            aria-label="Send Email"
+          >
+            <Mail size={24} />
+          </a>
         </div>
       </div>
       
