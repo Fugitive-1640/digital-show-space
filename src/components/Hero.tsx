@@ -2,8 +2,10 @@
 import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
+  const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [textIndex, setTextIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
@@ -132,6 +134,7 @@ export const Hero = () => {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center opacity-0 animate-[fadeInUp_1s_ease-out_0.8s_forwards]">
           <Button 
             size="lg" 
+            onClick={() => navigate('/projects')}
             className="bg-primary hover:bg-primary/90 text-primary-foreground transform transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-primary/25 group ripple-effect glowing-border magnetic-hover"
           >
             <span className="group-hover:animate-pulse text-glow">View My Work</span>
